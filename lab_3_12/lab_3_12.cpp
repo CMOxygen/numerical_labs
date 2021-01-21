@@ -146,4 +146,5 @@ int main()
 		cout << "Deviation: ";
 		cout << fixed << round(dev * 1000000) / 1000000 << endl;
 	}
+	system("pause");
 }

@@ -19,23 +19,23 @@ int main()
     const int size = 3;
     int counter = 0;
 
-    float AB[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
+    double AB[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
                                 {6.4, 1.3, -2.7, 3.8},
                                 {2.4, -4.5, 3.5, -0.6}};
 
-    float itViewAB[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
+    double itViewAB[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
                                       {6.4, 1.3, -2.7, 3.8},
                                       {2.4, -4.5, 3.5, -0.6}};
 
-    float temp[size + 1];
-    float tempVal;
-    float sols[size];
+    double temp[size + 1];
+    double tempVal;
+    double sols[size];
 
-    float convA[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
+    double convA[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
                                    {6.4, 1.3, -2.7, 3.8},
                                    {2.4, -4.5, 3.5, -0.6}};
 
-    float E = 0.0001;
+    double E = 0.0001;
 
     cout << "Ishodnaya matritsa" << endl;
 
@@ -133,7 +133,7 @@ int main()
     cout << endl;
     cout << endl;
 
-    float maxVal;
+    double maxVal;
     int maxCell;
 
     for (int i = 0; i < size; i++) //ПРИВОДИМ СИСТЕМУ УРАВНЕНИЙ К СХОДЯЩЕМУСЯ ВИДУ
@@ -169,9 +169,9 @@ int main()
     }
     cout << endl;
 
-    float norm;
-    float c;
-    float delta;
+    double norm;
+    double c;
+    double delta;
 
     for (int k = 0; k < 4; k++) //РЕШАЕМ СИСТЕМУ МЕТОДОМ ЗЕЙДЕЛЯ
     {
