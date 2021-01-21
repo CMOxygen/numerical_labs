@@ -49,11 +49,11 @@ int main()
 
     cout << "Basic matrix: " << endl;
 
-    for (int i = 0; i < 3; i++) //ВЫВОД БАЗОВОЙ МАТРИЦЫ
+    for (int i = 0; i < size; i++) //ВЫВОД БАЗОВОЙ МАТРИЦЫ
     {
         x[i] = B[i];
 
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < size; j++)
         {
             if (j == 2)
             {
@@ -75,18 +75,19 @@ int main()
         }
     }
 
-    for (int k = 0; k < 3; k++) //МЕТОД ПЕРЕСТАНОВКИ
+    for (int k = 0; k < size; k++) //МЕТОД ПЕРЕСТАНОВКИ
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < size; i++)
         {
             s1 = fabs(A[k][i]);
-            for (int j = 0; j < 3; j++)
+
+            for (int j = 0; j < size; j++)
             {
                 s2 = s2 + fabs(A[k][j]);
             }
             if (s1 > s2 - s1)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < size; j++)
                 {
                     pocket[j] = A[k][j];
                     A[k][j] = A[i][j];
@@ -102,11 +103,11 @@ int main()
     }
 
     cout << "Matrix after shifting" << endl;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < size; i++)
     {
         x[i] = B[i];
 
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < size; j++)
         {
             if (j == 2)
             {
@@ -131,11 +132,11 @@ int main()
     {
         c = 0;
 
-        for (int i = 0; i < 3; i++) //МЕТОД ЗАМЕНЫ
+        for (int i = 0; i < size; i++) //МЕТОД ЗАМЕНЫ
         {
             s1 = fabs(A[i][i]);
 
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < size; j++)
             {
                 s2 = s2 + fabs(A[i][j]);
             }
@@ -144,11 +145,11 @@ int main()
                 c++;
             else
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < size; j++)
                 {
                     d = i + 1;
 
-                    if (i + 1 > 3)
+                    if (i + 1 > size)
                     {
                         d = i - 1;
                     }
@@ -162,10 +163,10 @@ int main()
 
     cout << "Matrix after changing" << endl;
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < size; i++)
     {
         x[i] = B[i];
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < size; j++)
         {
             if (j == 2)
             {
@@ -189,10 +190,10 @@ int main()
     do //ВЫЧИСЛЯЕМ КОРНИ
     {
         norm = 0;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < size; i++)
         {
             c = B[i];
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < size; j++)
             {
                 if (i != j)
                     c = c - A[i][j] * x[j];
@@ -219,7 +220,7 @@ int main()
 
     cout << "Solutions: " << endl;
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < size; i++)
     {
         cout << "x";
         cout << fixed << i + 1;

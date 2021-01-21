@@ -21,21 +21,21 @@ int main()
 	double xy[2][size] = {{1.415, 1.420, 1.425, 1.430, 1.435, 1.440},
 						  {8.88551, 8.89599, 8.90637, 8.91667, 8.92687, 8.93698}};
 
-	cout.precision(6);	
+	cout.precision(6);
 
 	double A[size - 2][size - 2];
 	double B[size - 2];
 	double xl[4];
-	
+
 	double del;
 	double dev;
 	double c;
 
-	cout<<"Starting functions"<<endl;
+	cout << "Starting functions" << endl;
 
 	cout << "x: "; //ВЫВОД ИСХОДНОЙ МАТРИЦЫ
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < size; i++)
 	{
 		cout << x[i];
 	}
@@ -43,21 +43,19 @@ int main()
 
 	cout << "y: ";
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < size; i++)
 	{
 		cout << y[i];
 	}
 	cout << endl;
 
-
-
-	for (int k = 1; k < 4; k++)	//ОСНОВНОЙ АЛГОРИТМ
+	for (int k = 1; k < 4; k++) //ОСНОВНОЙ АЛГОРИТМ
 	{
-		for (int i = 0; i <= k; i++)//ПОЛУЧАЕМ МАРИЦЫ A И B
+		for (int i = 0; i <= k; i++) //ПОЛУЧАЕМ МАРИЦЫ A И B
 		{
 			B[i] = 0;
 
-			for (int n = 0; n < 6; n++)
+			for (int n = 0; n < size; n++)
 			{
 				B[i] = B[i] + y[n] * pow(x[n], i);
 			}
@@ -95,11 +93,11 @@ int main()
 				c = c - A[i][j] * xl[j];
 			}
 			xl[i] = c / A[i][i];
-		}		
-		cout << "Approximation power ";//ВЫВОДИМ СТЕПЕНЬ АППРОКСИМАЦИ
+		}
+		cout << "Approximation power "; //ВЫВОДИМ СТЕПЕНЬ АППРОКСИМАЦИ
 		cout << k << endl;
 
-		for (int i = 0; i <= k; i++)//ВЫВОДИМ ЗНАЧЕНИЕ АППРОКСИМАЦИИ
+		for (int i = 0; i <= k; i++) //ВЫВОДИМ ЗНАЧЕНИЕ АППРОКСИМАЦИИ
 		{
 			cout << "a(";
 			cout << i + 1;
@@ -109,7 +107,7 @@ int main()
 
 		del = 0;
 
-		for (int i = 0; i < 6; i++) // ВЫЧИСЛЕНИЕ СМЕЩЕНИЯ
+		for (int i = 0; i < size; i++) // ВЫЧИСЛЕНИЕ СМЕЩЕНИЯ
 		{
 			dev = 0;
 
