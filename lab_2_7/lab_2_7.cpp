@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <math.h>
+#include <iomanip>
 
 // Вариант 2.7
 
@@ -17,195 +17,214 @@ using namespace std;
 int main()
 {
     const int size = 3;
-    int counter = 0;
 
     double AB[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
-                                {6.4, 1.3, -2.7, 3.8},
-                                {2.4, -4.5, 3.5, -0.6}};
+                                 {6.4, 1.3, -2.7, 3.8},
+                                 {2.4, -4.5, 3.5, -0.6}};
 
-    double itViewAB[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
-                                      {6.4, 1.3, -2.7, 3.8},
-                                      {2.4, -4.5, 3.5, -0.6}};
+    double A[size][size] = {{3.8, 6.7, -1.2},
+                            {6.4, 1.3, -2.7},
+                            {2.4, -4.5, 3.5}};
 
-    double temp[size + 1];
-    double tempVal;
-    double sols[size];
+    double B[size] = {5.2, 3.8, -0.6};
 
-    double convA[size][size + 1] = {{3.8, 6.7, -1.2, 5.2},
-                                   {6.4, 1.3, -2.7, 3.8},
-                                   {2.4, -4.5, 3.5, -0.6}};
+    double pocket[4];
+    double x[3];
 
     double E = 0.0001;
+    double norm = 0;
+    double del;
 
-    cout << "Ishodnaya matritsa" << endl;
+    double s1 = 0;
+    double s2 = 0;
 
-    for (int i = 0; i < size; i++) //ВЫВОД ИСХОДНОЙ МАТРИЦЫ
+    double c;
+
+    int i;
+    int j;
+    int k;
+    int d;
+
+    cout.precision(6);
+
+    cout << "Basic matrix: " << endl;
+
+    for (int i = 0; i < 3; i++) //ВЫВОД БАЗОВОЙ МАТРИЦЫ
     {
-        for (int j = 0; j < size + 1; j++)
-        {
-            cout << AB[i][j];
-            cout << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
+        x[i] = B[i];
 
-    for (int i = 0; i < size; i++) //ПРИВЕДЕНИЕ МАТРИЦЫ К ВИДУ УДОБНОМУ ДЛЯ ИТЕРАЦИЙ
-    {
-        for (int j = 0; j < size + 1; j++)
+        for (int j = 0; j < 3; j++)
         {
-            if (j < size)
+            if (j == 2)
             {
-                itViewAB[i][j] = itViewAB[i][j] / AB[i][i];
+                cout << fixed << A[i][j];
+                cout << "*x";
+                cout << fixed << j + 1;
+                cout << "      =         ";
+                cout << fixed << B[i] << endl;
+                cout << " " << endl;
+            }
+
+            else
+            {
+                cout << fixed << A[i][j];
+                cout << "*x";
+                cout << fixed << j + 1;
+                cout << " ";
+            }
+        }
+    }
+
+    for (int k = 0; k < 3; k++) //МЕТОД ПЕРЕСТАНОВКИ
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            s1 = fabs(A[k][i]);
+            for (int j = 0; j < 3; j++)
+            {
+                s2 = s2 + fabs(A[k][j]);
+            }
+            if (s1 > s2 - s1)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    pocket[j] = A[k][j];
+                    A[k][j] = A[i][j];
+                    A[i][j] = pocket[j];
+                }
+
+                pocket[3] = B[k];
+                B[k] = B[i];
+                B[i] = pocket[3];
+            }
+            s2 = 0;
+        }
+    }
+
+    cout << "Matrix after shifting" << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        x[i] = B[i];
+
+        for (int j = 0; j < 3; j++)
+        {
+            if (j == 2)
+            {
+                cout << fixed << A[i][j];
+                cout << "*x";
+                cout << fixed << j + 1;
+                cout << "      =         ";
+                cout << fixed << B[i];
+                cout << " " << endl;
             }
             else
             {
-                itViewAB[i][j] = itViewAB[i][j] / AB[i][i];
+                cout << fixed << A[i][j];
+                cout << "*x";
+                cout << fixed << j + 1;
+                cout << " ";
             }
         }
     }
 
-    for (int i = 0; i < size; i++)
+    do
     {
-        for (int j = 0; j < size + 1; j++)
-        {
-            cout << itViewAB[i][j];
-            cout << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
+        c = 0;
 
-    for (int i = 0; i < size; i++) //ВЫНОСИМ Х ЗА =
-    {
-        for (int j = 0; j < size; j++)
+        for (int i = 0; i < 3; i++) //МЕТОД ЗАМЕНЫ
         {
-            if (itViewAB[i][j] == 1)
+            s1 = fabs(A[i][i]);
+
+            for (int j = 0; j < 3; j++)
             {
-                tempVal = itViewAB[i][0];
-                itViewAB[i][0] = 1;
-                itViewAB[i][j] = tempVal;
+                s2 = s2 + fabs(A[i][j]);
             }
-        }
 
-        tempVal = itViewAB[i][1];
-        itViewAB[i][1] = itViewAB[i][size];
-        itViewAB[i][size] = tempVal;
-
-        for (int j = 2; j < size + 1; j++)
-        {
-
-            itViewAB[i][j] = -itViewAB[i][j];
-        }
-    }
-
-    cout << "Iteratsionniy vid" << endl;
-
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size + 1; j++)
-        {
-            cout << itViewAB[i][j];
-            cout << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-
-    for (int i = 0; i < size; i++) //НАХОДИМ Х ИЗ УРАВНЕНИЙ, И ЗАПИСЫВАЕМ В МАССИВ SOLS
-    {
-        sols[i] = 0;
-
-        for (int j = 0; j < size + 1; j++)
-        {
-
-            sols[i] += itViewAB[i][j];
-        }
-    }
-    cout << "Resheniya uravneniy" << endl;
-
-    for (int j = 0; j < size; j++)
-    {
-        cout << sols[j];
-        cout << " ";
-    }
-
-    cout << endl;
-    cout << endl;
-
-    double maxVal;
-    int maxCell;
-
-    for (int i = 0; i < size; i++) //ПРИВОДИМ СИСТЕМУ УРАВНЕНИЙ К СХОДЯЩЕМУСЯ ВИДУ
-    {
-
-        maxVal = 0;
-
-        for (int j = 0; j < size + 1; j++)
-        {
-
-            if (AB[i][j] > maxVal)
+            if (s1 > s2 - s1)
+                c++;
+            else
             {
+                for (int j = 0; j < 3; j++)
+                {
+                    d = i + 1;
 
-                maxVal = convA[i][j];
-                maxCell = j;
+                    if (i + 1 > 3)
+                    {
+                        d = i - 1;
+                    }
+                    A[i][j] = A[i][j] + A[d][j];
+                }
+                B[i] = B[i] + B[d];
+            }
+            s2 = 0;
+        }
+    } while (c != 3);
+
+    cout << "Matrix after changing" << endl;
+
+    for (int i = 0; i < 3; i++)
+    {
+        x[i] = B[i];
+        for (int j = 0; j < 3; j++)
+        {
+            if (j == 2)
+            {
+                cout << fixed << A[i][j];
+                cout << "*x";
+                cout << fixed << j + 1;
+                cout << "      =         ";
+                cout << fixed << B[i];
+                cout << " " << endl;
+            }
+            else
+            {
+                cout << fixed << A[i][j];
+                cout << "*x";
+                cout << fixed << j + 1;
+                cout << " ";
             }
         }
-
-        tempVal = convA[i][i];
-        convA[i][i] = maxVal;
-        convA[i][maxCell] = tempVal;
     }
 
-    cout << "Shodyashiysya vid:" << endl;
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size + 1; j++)
-        {
-            cout << convA[i][j];
-            cout << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-
-    double norm;
-    double c;
-    double delta;
-
-    for (int k = 0; k < 4; k++) //РЕШАЕМ СИСТЕМУ МЕТОДОМ ЗЕЙДЕЛЯ
+    do //ВЫЧИСЛЯЕМ КОРНИ
     {
         norm = 0;
-
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < 3; i++)
         {
-            c = convA[i][size - 1];
-
-            for (int j = 0; j < size; j++)
+            c = B[i];
+            for (int j = 0; j < 3; j++)
             {
                 if (i != j)
-                {
-                    c = c - convA[i][j] * sols[size - i - 1];
-                }
+                    c = c - A[i][j] * x[j];
             }
-            delta = sols[size - i - 1] - c;
 
-            if (delta > norm)
+            c = c / A[i][i];
+            del = x[i] - c;
+
+            if (del < 0)
             {
-                norm = delta;
+                del = del * (-1);
             }
-            sols[size - i - 1] = c;
+            if (del >= norm)
+            {
+                norm = del;
+            }
+            x[i] = c;
         }
-        if (norm < E)
+        if (norm <= E)
+        {
             break;
-    }
+        }
+    } while (true);
 
-    cout << "Resheniya s priblizheniyem 0.0001" << endl;
+    cout << "Solutions: " << endl;
 
-    for (int j = 0; j < size; j++)
+    for (int i = 0; i < 3; i++)
     {
-        cout << sols[j];
-        cout << " ";
+        cout << "x";
+        cout << fixed << i + 1;
+        cout << " = ";
+        cout << fixed << x[i] << endl;
     }
-    cout << endl;
+    system("pause");
 }

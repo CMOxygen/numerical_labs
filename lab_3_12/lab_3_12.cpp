@@ -21,38 +21,17 @@ int main()
 	double xy[2][size] = {{1.415, 1.420, 1.425, 1.430, 1.435, 1.440},
 						  {8.88551, 8.89599, 8.90637, 8.91667, 8.92687, 8.93698}};
 
-	cout.precision(6);
-
-	for (int i = 0; i < size; i++)
-	{
-		cout << x[i];
-		cout << " ";
-	}
-	cout << endl;
-
-	for (int i = 0; i < size; i++)
-	{
-		cout << y[i];
-		cout << " ";
-	}
-	cout << endl;
-
-	// ��������� ������
-
-	printf("Starting functions:\n");
+	cout.precision(6);	
 
 	double A[size - 2][size - 2];
 	double B[size - 2];
 	double xl[4];
-
-	// int i;
-	// int j;
-	// int n;
-	// int k;
-
+	
 	double del;
 	double dev;
 	double c;
+
+	cout<<"Starting functions"<<endl;
 
 	cout << "x: "; //ВЫВОД ИСХОДНОЙ МАТРИЦЫ
 
