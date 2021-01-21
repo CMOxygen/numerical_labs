@@ -100,6 +100,7 @@ int main()
     cout << endl;
     cout << "Euler solution" << endl;
     cout << fixed << Pn << endl;
+    
 
     system("pause");
 }
