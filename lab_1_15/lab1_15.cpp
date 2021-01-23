@@ -17,7 +17,8 @@ int main()
     const int size = 4;
     int num = 0;
 
-    double detA;
+    double detA = 1;
+        double c = 0;
 
     double A[size][size] = {
         {7.5, 1.8, -2.1, -7.7},
@@ -37,33 +38,10 @@ int main()
         {2.8, -1.7, 3.9, 4.8, 1.2},
         {10.0, 31.4, -2.1, -10.0, -1.1}};
 
-    double C[size + 1]; 
-
     double x[size];
-
-    double inv_A[size][size] = {
-        {7.5, 1.8, -2.1, -7.7},
-        {-10.0, 1.3, -20.0, -1.4},
-        {2.8, -1.7, 3.9, 4.8},
-        {10.0, 31.4, -2.1, -10.0}};
-
-    double inv_A2[size][size] = {
-        {7.5, 1.8, -2.1, -7.7},
-        {-10.0, 1.3, -20.0, -1.4},
-        {2.8, -1.7, 3.9, 4.8},
-        {10.0, 31.4, -2.1, -10.0}};
-
-    double dbgA[size][size] = {
-        {7.5, 1.8, -2.1, -7.7},
-        {-10.0, 1.3, -20.0, -1.4},
-        {2.8, -1.7, 3.9, 4.8},
-        {10.0, 31.4, -2.1, -10.0}};
-
-
 
     //ВЫВОДИМ ИСХОДНУЮ МАТРИЦУ НА ЭКРАН
 
-    
     std::cout << "Basic matrix" << std::endl;
 
     for (int i = 0; i < size; i++)
@@ -75,54 +53,60 @@ int main()
         }
         std::cout << std::endl;
     }
-    
+
     std::cout << std::endl;
+    //ЭТАП ПРЯМОГО ХОДА. ПРИВОДИМ МАТРИЦУ К ВЕРХНЕ-ТРЕУГОЛЬНОМУ ВИДУ.
 
-    for (int i = num + 1; i < size; i++) //ЭТАП ПРЯМОГО ХОДА. ПРИВОДИМ МАТРИЦУ К ВЕРХНЕ-ТРЕУГОЛЬНОМУ ВИДУ.
-    {                                                
-        for (int j = 0; j < size + 1; j++)
-        {
-            C[j] = AB[num][j] / AB[num][num]; 
 
-            AB[i][j] = AB[i][j] - C[j] * AB[i][num]; 
-        }
-        if (i == size - 1)
+
+    for (int k = 0; k < size; k++)
+    {
+        for (int i = k + 1; i < size; i++)
         {
-            num++;
-            i = num;
+            c = A[i][k] / A[k][k];
+            B[i] = B[i] - c * B[k];
+            for (int j = k + 1; j < size; j++)
+            {
+                A[i][k] = 0;
+                A[i][j] = A[i][j] - c * A[k][j];
+            }
         }
     }
 
     std::cout << "Matrix in triangle mode" << std::endl;
 
-    for (int i = 0; i < size; i++) //ВЫВОДИМ ПОЛУЧЕННУЮ МАТРИЦУ НА ЭКРАН
+    //ВЫВОДИМ ПОЛУЧЕННУЮ МАТРИЦУ НА ЭКРАН
+
+    for (int i = 0; i < size; i++)
     {
-        for (int j = 0; j < size + 1; j++)
+        for (int j = 0; j < size; j++)
         {
-            std::cout << AB[i][j];
-            std::cout << " ";
+            if (j == 3)
+            {
+                std::cout << A[i][j];
+                std::cout << "  ";
+                std::cout << B[i] << std::endl;
+            }
+            else
+            {
+                std::cout << A[i][j];
+                std::cout << "  ";
+            }
         }
-        std::cout << std::endl;
     }
 
-    //ЭТАП ОБРАТНОГО ХОДА. ПОЛУЧАЕМ КОРНИ ИЗ ПОЛУЧИВШЕЙСЯ МАТРИЦЫ. 
-    float Xn = AB[size - 1][size] / AB[size - 1][size - 1]; 
-    x[size - 1] = Xn;                                         
+    //ЭТАП ОБРАТНОГО ХОДА. ПОЛУЧАЕМ КОРНИ ИЗ ПОЛУЧИВШЕЙСЯ МАТРИЦЫ.
 
-    float Bnn;
-    float Ann_n;
-    float Ann_nn;
-    float Xnn;
+    x[3] = B[3] / A[3][3];
 
-    for (num = 1; num <= size; num++) 
+    for (int i = 2; i > -1; i--)
     {
-        Bnn = AB[size - num - 1][size];
-        Ann_n = AB[size - num - 1][size - 1];
-        Ann_nn = AB[size - num - 1][size - num - 1];
-
-        Xnn = (Bnn - Ann_n * Xn) / Ann_nn;
-        x[size - num - 1] = Xnn;
-        Xn = Xnn;
+        c = B[i];
+        for (int j = i + 1; j < 4; j++)
+        {
+            c = c - A[i][j] * x[j];
+        }
+        x[i] = c / A[i][i];
     }
 
     std::cout << std::endl;
@@ -135,45 +119,20 @@ int main()
         std::cout << " ";
         std::cout << x[i] << std::endl;
     }
-    std::cout << std::endl;  
+    std::cout << std::endl;
 
     num = 0;
-    detA = 1;
 
- 
+    //ВЫЧИСЛЯЕМ ДЕТЕРМИНАНТ
 
-    for (int i = num + 1; i < size; i++)   //ВЫЧИСЛЯЕМ ДЕТЕРМИНАНТ
+    for (int i = 0; i < size; i++)
     {
-        for (int j = 0; j < size; j++)
-        {
-            C[j] = A[num][j] / A[num][num];
 
-            A[i][j] = A[i][j] - C[j] * A[i][num];
-
-            if (i == j)
-                detA *= A[i][j]; 
-        }
-
-        if (i == size - 1)
-        {
-            num++;
-            i = num;
-        }
+        detA *= A[i][i];
     }
-    std::cout << "Matrix in triangle view" << std::endl;
 
-    for (int i = 0; i < size; i++) //ВЫВОДИМ МАТРИЦУ В ВЕРХНЕ=ТРУГОЛЬНОМ ВИДЕ
-    {
-        for (int j = 0; j < size; j++)
-        {
-            std::cout << A[i][j];
-            std::cout << " ";
-        }
-        std::cout << std::endl;
-    }
     std::cout << "Determinant A" << std::endl;
     std::cout << detA << std::endl; //ВЫВОДИМ ДЕТЕРМИНАНТ
-
 
     system("pause");
 }

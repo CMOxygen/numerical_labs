@@ -31,7 +31,7 @@ int main()
 
 	for (int i = 0; i < n; i++) //ИЩЕМ ЗНАЧЕНИЯ ИНТЕГРАЛА
 	{
-		y[i + 1] = y[i] + h * (sin(x + y[i]) + 1.5 * y[i] / (x + 2));
+		y[i + 1] = y[i] + h * (sin(x + y[i]) + 0.5 * y[i] / (x + 2));
 		x = x + h;
 	}
 	cout << "Approximation values of the integral:" << endl;

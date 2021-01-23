@@ -75,34 +75,56 @@ int main()
         }
     }
 
-    for (int k = 0; k < size; k++) //МЕТОД ПЕРЕСТАНОВКИ
+    double temp = 0;
+    double max = 0;
+    int cell;
+
+    for (int i = 0; i < size; i++)
     {
-        for (int i = 0; i < size; i++)
+        max = 0;
+        for (int j = 0; j < size + 1; j++)
         {
-            s1 = fabs(A[k][i]);
-
-            for (int j = 0; j < size; j++)
+            if (AB[i][j] > max)
             {
-                s2 = s2 + fabs(A[k][j]);
+                max = AB[i][j];
+                cell = j;
             }
-            if (s1 > s2 - s1)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    pocket[j] = A[k][j];
-                    A[k][j] = A[i][j];
-                    A[i][j] = pocket[j];
-                }
+        }
 
-                pocket[3] = B[k];
-                B[k] = B[i];
-                B[i] = pocket[3];
+        temp = AB[i][i];
+        AB[i][i] = max;
+        AB[i][cell] = temp;
+    }
+
+    // for (int i = 0; i < size; i++)
+    // {
+    //     for (int j = 0; j < size + 1; j++)
+    //     {
+    //         cout << AB[i][j];
+    //         cout << " ";
+    //     }
+    //     cout << endl;
+    // }
+    // cout << endl;
+
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size + 1; j++)
+        {
+
+            if (j < size)
+            {
+                A[i][j] = AB[i][j];
             }
-            s2 = 0;
+            else
+            {
+                B[i] = AB[i][j];
+            }
         }
     }
 
-    cout << "Matrix after shifting" << endl;
+    cout << "Converging view" << endl;
+
     for (int i = 0; i < size; i++)
     {
         x[i] = B[i];
@@ -115,66 +137,7 @@ int main()
                 cout << "*x";
                 cout << fixed << j + 1;
                 cout << "      =         ";
-                cout << fixed << B[i];
-                cout << " " << endl;
-            }
-            else
-            {
-                cout << fixed << A[i][j];
-                cout << "*x";
-                cout << fixed << j + 1;
-                cout << " ";
-            }
-        }
-    }
-
-    do
-    {
-        c = 0;
-
-        for (int i = 0; i < size; i++) //МЕТОД ЗАМЕНЫ
-        {
-            s1 = fabs(A[i][i]);
-
-            for (int j = 0; j < size; j++)
-            {
-                s2 = s2 + fabs(A[i][j]);
-            }
-
-            if (s1 > s2 - s1)
-                c++;
-            else
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    d = i + 1;
-
-                    if (i + 1 > size)
-                    {
-                        d = i - 1;
-                    }
-                    A[i][j] = A[i][j] + A[d][j];
-                }
-                B[i] = B[i] + B[d];
-            }
-            s2 = 0;
-        }
-    } while (c != 3);
-
-    cout << "Matrix after changing" << endl;
-
-    for (int i = 0; i < size; i++)
-    {
-        x[i] = B[i];
-        for (int j = 0; j < size; j++)
-        {
-            if (j == 2)
-            {
-                cout << fixed << A[i][j];
-                cout << "*x";
-                cout << fixed << j + 1;
-                cout << "      =         ";
-                cout << fixed << B[i];
+                cout << fixed << B[i] << endl;
                 cout << " " << endl;
             }
             else
