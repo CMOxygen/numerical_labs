@@ -75,43 +75,6 @@ int main()
         }
     }
 
-    // double temp = 0;
-    // double max = 0;
-    // int cell;
-
-    // for (int i = 0; i < size; i++)
-    // {
-    //     max = 0;
-    //     for (int j = 0; j < size + 1; j++)
-    //     {
-    //         if (AB[i][j] > max)
-    //         {
-    //             max = AB[i][j];
-    //             cell = j;
-    //         }
-    //     }
-
-    //     temp = AB[i][i];
-    //     AB[i][i] = max;
-    //     AB[i][cell] = temp;
-    // }
-
-    // for (int i = 0; i < size; i++)
-    // {
-    //     for (int j = 0; j < size + 1; j++)
-    //     {
-
-    //         if (j < size)
-    //         {
-    //             A[i][j] = AB[i][j];
-    //         }
-    //         else
-    //         {
-    //             B[i] = AB[i][j];
-    //         }
-    //     }
-    // }
-
     for (int k = 0; k < 3; k++)
     {
 
