@@ -75,51 +75,67 @@ int main()
         }
     }
 
-    double temp = 0;
-    double max = 0;
-    int cell;
+    // double temp = 0;
+    // double max = 0;
+    // int cell;
 
-    for (int i = 0; i < size; i++)
-    {
-        max = 0;
-        for (int j = 0; j < size + 1; j++)
-        {
-            if (AB[i][j] > max)
-            {
-                max = AB[i][j];
-                cell = j;
-            }
-        }
+    // for (int i = 0; i < size; i++)
+    // {
+    //     max = 0;
+    //     for (int j = 0; j < size + 1; j++)
+    //     {
+    //         if (AB[i][j] > max)
+    //         {
+    //             max = AB[i][j];
+    //             cell = j;
+    //         }
+    //     }
 
-        temp = AB[i][i];
-        AB[i][i] = max;
-        AB[i][cell] = temp;
-    }
+    //     temp = AB[i][i];
+    //     AB[i][i] = max;
+    //     AB[i][cell] = temp;
+    // }
 
     // for (int i = 0; i < size; i++)
     // {
     //     for (int j = 0; j < size + 1; j++)
     //     {
-    //         cout << AB[i][j];
-    //         cout << " ";
+
+    //         if (j < size)
+    //         {
+    //             A[i][j] = AB[i][j];
+    //         }
+    //         else
+    //         {
+    //             B[i] = AB[i][j];
+    //         }
     //     }
-    //     cout << endl;
     // }
-    // cout << endl;
 
-    for (int i = 0; i < size; i++)
+    for (int k = 0; k < 3; k++)
     {
-        for (int j = 0; j < size + 1; j++)
-        {
 
-            if (j < size)
+        for (int i = 0; i < 3; i++)
+        {
+            s1 = fabs(A[k][i]);
+            for (int j = 0; j < 3; j++)
             {
-                A[i][j] = AB[i][j];
+                s2 = s2 + fabs(A[k][j]);
             }
-            else
+            if (s1 > s2 - s1)
             {
-                B[i] = AB[i][j];
+                for (int j = 0; j < 3; j++)
+                {
+                    pocket[j] = A[k][j];
+                    A[k][j] = A[i][j];
+                    A[i][j] = pocket[j];
+                }
+
+                pocket[3] = B[k];
+                B[k] = B[i];
+                B[i] = pocket[3];
             }
+            s2 = 0;
         }
     }
 

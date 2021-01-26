@@ -14,7 +14,8 @@
 using namespace std;
 
 int main()
-{
+{   
+    const double pi = 3.14;
 
     const int n = 8;
     const int n2 = 2 * 8;
@@ -28,36 +29,39 @@ int main()
     double I2 = 0;
     double tmp = 0;
 
-    double y[n];
+    double y[n + 1];
 
-    double y2[n2];
+    double y2[n2 + 1];
     double x;
+
+    double deltaY[n + 1][4];
 
     cout.precision(6);
 
     cout << "Solution matrix" << endl;
 
-    for (int i = 0; i < n; i++) //ПОЛУЧАЕМ МАССИВ Y
+    for (int i = 0; i <= n; i++)
     {
-        if (i == 0)
-        {
-            y[i] = 0;
-            x = 0;
-        }
-        else
-        {
-            x = i * h;
-            y[i] = sin(2 * x) / (x * x);
-        }
-        cout << x;
+        x = 0;
+        x = b + (i * h);
+        y[i] = sin((pi / 180) * 2 * x) / (x * x);
+        cout << i;
+        cout << " ";
+
+        cout << fixed << x;
+        cout << " ";
+        cout << sin((3.14 / 180) * 2 * x);
+        cout << " ";
+        cout << x * x;
         cout << " ";
         cout << y[i] << endl;
     }
+
     cout << endl;
 
     tmp += y[0] * y[n - 1];
 
-    for (int i = 0; i < n; i++) //ВЫЧИСЛЯЕМ РЕЗУЛЬТАТ
+    for (int i = 0; i <= n; i++) //ВЫЧИСЛЯЕМ РЕЗУЛЬТАТ
     {
         if (i % 2 == 0)
         {
@@ -75,46 +79,46 @@ int main()
     cout << I << endl;
     cout << endl;
 
-    for (int i = 0; i < n2; i++) //ДЛЯ ПРОВЕРКИ ПОГРЕШНОСТИ УВЕЛИЧИВАЕМ ТОЧНОСТЬ
+    for (int i = 0; i < 8; i++)
     {
-        if (i == 0)
+
+        for (int j = 0; j < n + 1; j++)
         {
-            y2[i] = 0;
-            x = 0;
+            deltaY[i][j] = 0;
         }
-        else
+    }
+
+    int limit = n;
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < limit; j++)
         {
-            x = i * h2;
-            y2[i] = sin(2 * x) / (x * x);
+            if (i == 0)
+            {
+                deltaY[j][i] = y[j + 1] - y[j];
+            }
+            else
+            {
+                deltaY[j][i] = deltaY[j + 1][i - 1] - deltaY[j][i - 1];
+            }
         }
-        cout << x;
+        limit--;
+    }
+
+    for (int i = 0; i < n + 1; i++)
+    {
+        cout << i;
         cout << " ";
-        cout << y2[i] << endl;
-    }
-    cout << endl;
 
-    tmp = 0;
-    tmp += y2[0] * y2[n2 - 1];
+        for (int j = 0; j < 4; j++)
+        {
 
-    for (int i = 0; i < n; i++) //РАСЧЕТ ПРИ ПОВЫШЕННОЙ ТОЧНОСТИ
-    {
-        if (i % 2 == 0)
-        {
-            tmp += 2 * y2[i];
+            cout << deltaY[i][j];
+            cout << " ";
         }
-        else
-        {
-            tmp += 4 * y2[i];
-        }
+        cout << endl;
     }
 
-    I2 = (h2 / 3) * tmp;
-
-    cout << "Result with higher prescision" << endl;
-    cout << I2 << endl;
-
-    cout << "Error" << endl;
-    cout << I2 - I << endl; //ПОГРЕШНОСТЬ
-    
     system("pause");
 }
