@@ -11,9 +11,9 @@
 using namespace std;
 
 int main()
-{	
-	const double pi = 3.14;
-	
+{
+	const double pi = 3.1415926;
+
 	const int size = 11;
 
 	double a = 0;
@@ -29,11 +29,11 @@ int main()
 	cout.precision(6);
 
 	cout << "Start function:" << endl; //ВЫВОДИМ ИСХОДНУЮ ФУНКЦИЮ
-	cout << "y'=1-sin(x+y)+0.5y/(x+2)" << endl;
+	cout << "y'= 1-sin(x+y)+0.5y/(x+2)" << endl;
 
 	for (int i = 0; i < n; i++) //ИЩЕМ ЗНАЧЕНИЯ ИНТЕГРАЛА
 	{
-		y[i + 1] = y[i] + h * (sin((3.14 / 180)*(x + y[i])) + 0.5 * y[i] / (x + 2));
+		y[i + 1] = y[i] + h * (1 - sin((pi / 180) * (x + y[i])) + 0.5 * y[i] / (x + 2));
 		x = x + h;
 	}
 	cout << "Approximation values of the integral:" << endl;
@@ -47,6 +47,5 @@ int main()
 
 		a = a + h;
 	}
-
 	system("pause");
 }
