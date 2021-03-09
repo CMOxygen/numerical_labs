@@ -28,7 +28,7 @@ int main()
 
     double B[size] = {5.2, 3.8, -0.6};
 
-    double pocket[4];
+    double buffer[4];
     double x[3];
 
     double E = 0.0001;
@@ -37,6 +37,7 @@ int main()
 
     double s1 = 0;
     double s2 = 0;
+//    double s3 = 0.01;
 
     double c;
 
@@ -75,28 +76,27 @@ int main()
         }
     }
 
-    for (int k = 0; k < 3; k++)
+    for (int k = 0; k < size; k++)
     {
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < size; i++)
         {
             s1 = fabs(A[k][i]);
-            for (int j = 0; j < 3; j++)
+
+            for (int j = 0; j < size; j++)
             {
                 s2 = s2 + fabs(A[k][j]);
             }
             if (s1 > s2 - s1)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < size; j++)
                 {
-                    pocket[j] = A[k][j];
+                    buffer[j] = A[k][j];
                     A[k][j] = A[i][j];
-                    A[i][j] = pocket[j];
+                    A[i][j] = buffer[j];
                 }
-
-                pocket[3] = B[k];
+                buffer[3] = B[k];
                 B[k] = B[i];
-                B[i] = pocket[3];
+                B[i] = buffer[3];
             }
             s2 = 0;
         }
@@ -140,8 +140,7 @@ int main()
                 if (i != j)
                     c = c - A[i][j] * x[j];
             }
-
-            c = c / A[i][i];
+            c = c / A[i][i] + E;
             del = x[i] - c;
 
             if (del < 0)
