@@ -37,7 +37,6 @@ int main()
 
     double s1 = 0;
     double s2 = 0;
-//    double s3 = 0.01;
 
     double c;
 
